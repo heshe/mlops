@@ -1,14 +1,13 @@
-import sys
 import argparse
+import sys
 
+import matplotlib.pyplot as plt
 import torch
+import tqdm
+from torch import nn, optim
 
-from torch import nn
-from torch import optim
 from data import mnist
 from model import Classifier
-import matplotlib.pyplot as plt
-import tqdm
 
 
 class TrainOREvaluate(object):

@@ -1,5 +1,6 @@
-from torch import nn
 import torch.nn.functional as F
+from torch import nn
+
 
 class Classifier(nn.Module):
     def __init__(self):
@@ -12,11 +13,11 @@ class Classifier(nn.Module):
 
         # Dropout module with 0.2 drop probability
         self.dropout = nn.Dropout(p=0.5)
-        
+
     def forward(self, x):
         # make sure input tensor is flattened
-        #x = x.view(x.shape[0], -1)
-        
+        # x = x.view(x.shape[0], -1)
+
         # Now with dropout
         x = self.dropout(F.relu(self.conv1(x)))
         x = self.dropout(F.relu(self.conv2(x)))
@@ -28,5 +29,5 @@ class Classifier(nn.Module):
 
         # output so no dropout here
         x = F.log_softmax(self.fc2(x), dim=1)
-        
+
         return x
