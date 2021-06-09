@@ -1,14 +1,10 @@
 import argparse
-import sys
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 import torch
 from sklearn.manifold import TSNE
 from src.data.make_dataset import load_mnist
 from src.models.model import Classifier
-from torch import nn
-
 palette = sns.color_palette("bright", 10)
 
 

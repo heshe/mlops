@@ -5,13 +5,11 @@ import matplotlib.pyplot as plt
 import torch
 import tqdm
 from src.data.make_dataset import load_mnist
-import torchvision
 from torch import nn, optim
 
 # from torch.utils.tensorboard import SummaryWriter
 import wandb
 from src.models.model import Classifier
-import argparse
 
 
 class Trainer:

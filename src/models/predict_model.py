@@ -1,10 +1,6 @@
 import argparse
-import sys
-
-import matplotlib.pyplot as plt
 import torch
 from src.data.make_dataset import load_mnist
-
 from src.models.model import Classifier
 
 
