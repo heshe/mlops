@@ -1,6 +1,7 @@
 from src.models.train import Trainer
 import pytest
 
+
 @pytest.mark.parametrize("test_input", [0.1, 0.2])
 def test_eval(test_input):
     test_training(test_input)

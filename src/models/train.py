@@ -7,13 +7,14 @@ import tqdm
 from src.data.make_dataset import load_mnist
 import torchvision
 from torch import nn, optim
-#from torch.utils.tensorboard import SummaryWriter
+
+# from torch.utils.tensorboard import SummaryWriter
 import wandb
 from src.models.model import Classifier
 import argparse
 
 
-class Trainer():
+class Trainer:
     def __init__(self):
         parser = argparse.ArgumentParser(description="Training arguments")
         parser.add_argument("--lr", default=0.1, type=float)
@@ -27,7 +28,7 @@ class Trainer():
         print(sys.argv)
 
     def train(self):
-        
+
         if self.args.use_wandb:
             wandb.init(config=self.args)
 
@@ -70,7 +71,6 @@ class Trainer():
                 train_loss += loss.item()
                 steps += 1
 
-
             # VALIDATION
             with torch.no_grad():
                 model.eval()
@@ -91,13 +91,20 @@ class Trainer():
 
             # Wandb
             if self.args.use_wandb:
-                wandb.log({"train_loss": train_loss, "test_loss": test_loss,
-                        "accuracy": accuracy})
+                wandb.log(
+                    {
+                        "train_loss": train_loss,
+                        "test_loss": test_loss,
+                        "accuracy": accuracy,
+                    }
+                )
                 wandb.log({"examples": [wandb.Image(i) for i in images]})
 
             # Save current model
             if e % 5 == 0:
-                torch.save(model.state_dict(), f"models/{self.args.run_name}_model{e}.pth")
+                torch.save(
+                    model.state_dict(), f"models/{self.args.run_name}_model{e}.pth"
+                )
 
             # Sum up epoch
             epochs += [e]

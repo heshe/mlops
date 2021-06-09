@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install isort
+        pip install flake8
     - name: Isorts the repo
       run: |
-        isort .
+        flake8 .
