@@ -18,6 +18,11 @@ class Classifier(nn.Module):
         # make sure input tensor is flattened
         # x = x.view(x.shape[0], -1)
 
+        if x.ndim != 4:
+            raise ValueError('Expected input to a 4D tensor')
+        if x.shape[1] != 1 or x.shape[2] != 28 or x.shape[3] != 28:
+            raise ValueError(f'Expected each sample to have shape [1, 28, 28], but had {x.shape}')
+
         # Now with dropout
         x = self.dropout(F.relu(self.conv1(x)))
         x = self.dropout(F.relu(self.conv2(x)))

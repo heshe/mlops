@@ -5,28 +5,22 @@ import matplotlib.pyplot as plt
 import torch
 from src.data.make_dataset import load_mnist
 
-from model import Classifier
+from src.models.model import Classifier
 
-if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("--model_path", default="models/model29.pth")
-    parser.add_argument("--input_images", default="")
-    args = parser.parse_args()
-
+def predict(model_path, input_images, shuffle=True):
     # load model
     model = Classifier()
-    state_dict = torch.load(args.model_path)
+    state_dict = torch.load(model_path)
     model.load_state_dict(state_dict)
 
     # Evaluation
-    if args.input_images:
+    if input_images:
         # Implement loading of image
         print("Not supported")
     else:
         _, test_set = load_mnist()
-    testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=True)
+    testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=shuffle)
     with torch.no_grad():
         model.eval()
         res = torch.zeros(0)
@@ -43,3 +37,15 @@ if __name__ == "__main__":
         accuracy = torch.mean(res.type(torch.FloatTensor))
 
     print("Accuracy is: ", accuracy.item())
+
+    return accuracy.item(), log_ps, images
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--model_path", default="models/model29.pth")
+    parser.add_argument("--input_images", default="")
+    args = parser.parse_args()
+    predict(args.model_path, args.input_images)

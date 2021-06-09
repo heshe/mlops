@@ -1,0 +1,25 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.9.5",
+    "heartbeatAt": "2021-06-09T09:34:25.716758",
+    "startedAt": "2021-06-09T09:34:24.655696",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "--n_epochs=10",
+        "--run_name=wandb_test"
+    ],
+    "state": "running",
+    "program": "/Users/heshe/Desktop/mlops/mlops/cookiecutter_project/src/models/train.py",
+    "codePath": "cookiecutter_project/src/models/train.py",
+    "git": {
+        "remote": "git@github.com:heshe/mlops.git",
+        "commit": "2d3978335f75339fe971e947fdbd2464c0d95310"
+    },
+    "email": "tdh@veo.co",
+    "root": "/Users/heshe/Desktop/mlops/mlops",
+    "host": "Thomass-MacBook-Pro.local",
+    "username": "heshe",
+    "executable": "/Users/heshe/miniconda3/envs/mlops/bin/python"
+}
