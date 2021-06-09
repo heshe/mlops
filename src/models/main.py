@@ -121,7 +121,7 @@ class TrainOREvaluate(object):
             # Save current model
             if e % 5 == 0:
                 torch.save(
-                    model.state_dict(), 
+                    model.state_dict(),
                     f"models/{self.args.run_name}_model{e}.pth"
                 )
 
