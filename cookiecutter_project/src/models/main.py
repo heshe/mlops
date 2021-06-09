@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 import torch
 import tqdm
 from src.data.make_dataset import load_mnist
+import torchvision
 from torch import nn, optim
+#from torch.utils.tensorboard import SummaryWriter
+import wandb
 
 from model import Classifier
 
@@ -40,9 +43,14 @@ class TrainOREvaluate(object):
         # add any additional argument that you want
         args = parser.parse_args(sys.argv[2:])
         print(args)
+        wandb.init(config=args)
+
 
         # ____ Setup model, loss and optimizer _____
+        #tb = SummaryWriter()
+
         model = Classifier()
+        wandb.watch(model, log_freq=100)
         optimizer = optim.Adam(model.parameters(), lr=0.003)
         criterion = nn.NLLLoss()
 
@@ -64,6 +72,7 @@ class TrainOREvaluate(object):
             for images, labels in tqdm.tqdm(trainloader, total=max_steps):
                 if steps > max_steps:
                     break
+         
                 # TRAIN
                 model.train()
 
@@ -76,6 +85,7 @@ class TrainOREvaluate(object):
 
                 train_loss += loss.item()
                 steps += 1
+
 
             # VALIDATION
             with torch.no_grad():
@@ -94,6 +104,17 @@ class TrainOREvaluate(object):
                     equals = top_class == labels.view(*top_class.shape)
                     res = torch.cat((res, equals), dim=0)
                 accuracy = torch.mean(res.type(torch.FloatTensor))
+        
+
+            # Wandb
+            wandb.log({"train_loss": train_loss, "test_loss": test_loss,
+                       "accuracy": accuracy})
+            wandb.log({"examples" : [wandb.Image(i) for i in images]})
+
+            # Tensorboard
+            #tb.add_scalar("Test_loss", test_loss, e)
+            #tb.add_scalar("Train_loss", train_loss, e)
+            #tb.add_histogram("conv1.weight", model.conv1.weight, e)
 
             # Save current model
             if e % 5 == 0:
@@ -109,6 +130,17 @@ class TrainOREvaluate(object):
             plt.legend()
             plt.savefig(f"reports/figures/loss_curve_{args.run_name}.pdf")
             plt.close()
+
+        #grid = torchvision.utils.make_grid(images)
+        #tb.add_image("images", grid)
+        #tb.add_graph(model, images)
+        #tb.add_hparams({"lr": args.lr,
+                    #    "epochs": args.n_epochs},
+                       
+                    #    {"accuracy": round(accuracy.item()*100, 4),
+                    #     "test_loss": test_losses[-1]})
+        #tb.close()
+
 
     def evaluate(self):
         print("Evaluating until hitting the ceiling")
