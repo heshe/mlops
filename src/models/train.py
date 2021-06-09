@@ -47,7 +47,8 @@ class Trainer:
         trainloader = torch.utils.data.DataLoader(
             train_set, batch_size=256, shuffle=True
         )
-        testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=True)
+        testloader = torch.utils.data.DataLoader(test_set, batch_size=256,
+                                                 shuffle=True)
 
         # ____Training loop  _____
         for e in range(n_epochs):
@@ -102,8 +103,9 @@ class Trainer:
 
             # Save current model
             if e % 5 == 0:
+                save_path = f"models/{self.args.run_name}_model{e}.pth"
                 torch.save(
-                    model.state_dict(), f"models/{self.args.run_name}_model{e}.pth"
+                    model.state_dict(), save_path
                 )
 
             # Sum up epoch
@@ -115,7 +117,8 @@ class Trainer:
                 plt.plot(epochs, train_losses, label="Train")
                 plt.plot(epochs, test_losses, label="Test")
                 plt.legend()
-                plt.savefig(f"reports/figures/loss_curve_{self.args.run_name}.pdf")
+                p = f"reports/figures/loss_curve_{self.args.run_name}.pdf"
+                plt.savefig(p)
                 plt.close()
 
         return train_losses, test_losses

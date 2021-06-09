@@ -65,7 +65,8 @@ class TrainOREvaluate(object):
         trainloader = torch.utils.data.DataLoader(
             train_set, batch_size=256, shuffle=True
         )
-        testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=True)
+        testloader = torch.utils.data.DataLoader(test_set, batch_size=256,
+                                                 shuffle=True)
 
         # ____Training loop  _____
         for e in range(n_epochs):
@@ -121,7 +122,8 @@ class TrainOREvaluate(object):
             # Save current model
             if e % 5 == 0:
                 torch.save(
-                    model.state_dict(), f"models/{self.args.run_name}_model{e}.pth"
+                    model.state_dict(), 
+                    f"models/{self.args.run_name}_model{e}.pth"
                 )
 
             # Sum up epoch
@@ -129,11 +131,12 @@ class TrainOREvaluate(object):
             train_losses += [train_loss]
             test_losses += [test_loss]
             print(f"Epoch {e}:   acc={round(accuracy.item()*100, 4)}%")
+            savedir = f"reports/figures/loss_curve_{self.args.run_name}.pdf"
             if self.args.plot_results:
                 plt.plot(epochs, train_losses, label="Train")
                 plt.plot(epochs, test_losses, label="Test")
                 plt.legend()
-                plt.savefig(f"reports/figures/loss_curve_{self.args.run_name}.pdf")
+                plt.savefig(savedir)
                 plt.close()
 
         return train_losses, test_losses
@@ -154,7 +157,8 @@ class TrainOREvaluate(object):
 
         # Evaluation
         _, test_set = load_mnist()
-        testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=True)
+        testloader = torch.utils.data.DataLoader(test_set, batch_size=256,
+                                                 shuffle=True)
         with torch.no_grad():
             model.eval()
             res = torch.zeros(0)

@@ -42,7 +42,8 @@ if __name__ == "__main__":
         print("Not supported")
     else:
         _, test_set = load_mnist()
-    testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=True)
+    testloader = torch.utils.data.DataLoader(test_set, batch_size=256,
+                                             shuffle=True)
 
     all_labels = []
     all_outputs = []

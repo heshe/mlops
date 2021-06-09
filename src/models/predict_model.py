@@ -20,7 +20,8 @@ def predict(model_path, input_images, shuffle=True):
         print("Not supported")
     else:
         _, test_set = load_mnist()
-    testloader = torch.utils.data.DataLoader(test_set, batch_size=256, shuffle=shuffle)
+    testloader = torch.utils.data.DataLoader(test_set, batch_size=256,
+                                             shuffle=shuffle)
     with torch.no_grad():
         model.eval()
         res = torch.zeros(0)
