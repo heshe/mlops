@@ -10,5 +10,6 @@ def test_data_loading():
     assert trainset[0][0].shape == torch.Size([1, 28, 28])
     assert len(trainset.classes) == 10
 
-    # assert that each datapoint has shape [1,28,28] or [728] depending on how you choose to format
+    # assert that each datapoint has shape [1,28,28] or [728] depending on how 
+    # you choose to format
     # assert that all labels are represented
