@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     # not used in this stub but often useful for finding various files
 
-    # # find .env automagically by walking up directories until it's found, then
+    # # find .env automagically by walking up directories until it's found, the
     # # load up the .env entries as environment variables
     # load_dotenv(find_dotenv())
 
